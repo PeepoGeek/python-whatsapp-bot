@@ -1,20 +1,20 @@
 # Set base image (host OS)
-FROM python:3.12-alpine
+FROM --platform=linux/amd64 python:3.12-alpine
 
-# By default, listen on port 5000
+# Por defecto, escucha en el puerto 5000
 EXPOSE 5000/tcp
 
-# Set the working directory in the container
+# Establece el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Copy the dependencies file to the working directory
+# Copia el archivo de dependencias al directorio de trabajo
 COPY requirements.txt .
 
-# Install any dependencies
-RUN pip install -r requirements.txt
+# Instala las dependencias
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the content of the local src directory to the working directory
+# Copia el contenido del directorio local al directorio de trabajo
 COPY . .
 
-# Specify the command to run on container start
-CMD [ "python", "./run.py" ]
+# Especifica el comando para ejecutar al iniciar el contenedor usando gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--timeout", "120", "run:app"]
