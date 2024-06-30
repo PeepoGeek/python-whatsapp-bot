@@ -21,6 +21,10 @@ APP_SECRET = os.getenv("APP_SECRET")
 # --------------------------------------------------------------
 # Send a template WhatsApp message
 # --------------------------------------------------------------
+print(ACCESS_TOKEN)
+print(RECIPIENT_WAID)
+print(PHONE_NUMBER_ID)
+print(VERSION)
 
 
 def send_whatsapp_message():

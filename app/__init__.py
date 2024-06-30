@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from app.config import load_configurations, configure_logging
 from .views import webhook_blueprint
 
@@ -12,5 +12,11 @@ def create_app():
 
     # Import and register blueprints, if any
     app.register_blueprint(webhook_blueprint)
+
+    # Healthcheck endpoint
+    @app.route("/healthcheck", methods=["GET"])
+    def healthcheck():
+        return jsonify({"status": "ok"}), 200
+
 
     return app
